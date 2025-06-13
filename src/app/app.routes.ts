@@ -32,7 +32,7 @@ export const routes: Routes = [
           import('./pages/communities/communities').then((m) => m.Communities),
       },
       {
-        path: 'communities/:community',
+        path: 'community',
         loadComponent: () =>
           import('./pages/communities/community-details/community-details').then(
             (m) => m.CommunityDetails
