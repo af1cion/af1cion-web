@@ -1,38 +1,13 @@
 <div class="flex gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory">
-  <div class="min-w-[200px] w-[200px] h-[320px] rounded-xl overflow-hidden bg-black relative">
-    <img src="/news-mock/news_1.jpg" alt="" class="w-full h-full object-cover select-none mask" draggable="false" />
-    <div class="cursor-pointer p-4 bottom-0 absolute z-50">
-      <p class="font-medium text-sm text-neutral-50 mb-2">Ferrari prepara mejoras clave para Baréin</p>
-      <span class="flex items-center font-medium text-xs text-[#777777] gap-1">
-        <lucide-icon name="Link" [size]="14" />gpfans.com
-      </span>
+  @for (item of news; track $index) {
+    <div class="min-w-[200px] w-[200px] h-[320px] rounded-xl overflow-hidden bg-black relative">
+      <img [src]="item.image" alt="" class="w-full h-full object-cover select-none mask" draggable="false" />
+      <div class="cursor-pointer p-4 bottom-0 absolute z-50">
+        <p class="font-medium text-sm text-neutral-50 mb-2">{{ item.title }}</p>
+        <span class="flex items-center font-medium text-xs text-[#777777] gap-1">
+          <lucide-icon name="Link" [size]="14" />{{ item.font }}
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="min-w-[200px] w-[200px] h-[320px] rounded-xl overflow-hidden bg-black relative">
-    <img src="/news-mock/news_2.jpg" alt="" class="w-full h-full object-cover select-none mask" draggable="false" />
-    <div class="cursor-pointer p-4 bottom-0 absolute z-50">
-      <p class="font-medium text-sm text-neutral-50 mb-2">Norris pide calma tras inicio de McLaren</p>
-      <span class="flex items-center font-medium text-xs text-[#777777] gap-1">
-        <lucide-icon name="Link" [size]="14" />formula1.com
-      </span>
-    </div>
-  </div>
-  <div class="min-w-[200px] w-[200px] h-[320px] rounded-xl overflow-hidden bg-black relative">
-    <img src="/news-mock/news_3.jpg" alt="" class="w-full h-full object-cover select-none mask" draggable="false" />
-    <div class="cursor-pointer p-4 bottom-0 absolute z-50">
-      <p class="font-medium text-sm text-neutral-50 mb-2">Mercedes es el segundo mejor, según Russell</p>
-      <span class="flex items-center font-medium text-xs text-[#777777] gap-1">
-        <lucide-icon name="Link" [size]="14" />f1l.com
-      </span>
-    </div>
-  </div>
-  <div class="min-w-[200px] w-[200px] h-[320px] rounded-xl overflow-hidden bg-black relative">
-    <img src="/news-mock/news_4.jpg" alt="" class="w-full h-full object-cover select-none mask" draggable="false" />
-    <div class="cursor-pointer p-4 bottom-0 absolute z-50">
-      <p class="font-medium text-sm text-neutral-50 mb-2">FIA stance on Checo angers Red Bull</p>
-      <span class="flex items-center font-medium text-xs text-[#777777] gap-1">
-        <lucide-icon name="Link" [size]="14" />gpfans.com
-      </span>
-    </div>
-  </div>
+  }
 </div>
