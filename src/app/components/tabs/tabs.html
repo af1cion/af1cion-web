@@ -1,0 +1,27 @@
+<div class=" flex items-center font-medium text-neutral-50 text-center cursor-pointer mb-10 border-b border-[#181818] relative">
+  <div 
+    class="flex-1 py-4"
+    [ngClass]="{
+      'text-neutral-50': activeTab() === 'primary',
+      'text-[#777777]': activeTab() !== 'primary'
+    }"
+    (click)="selectTab('primary')"
+  >
+    {{ labelPrimary() }}
+  </div>
+  <div 
+    class="flex-1 py-4"
+    [ngClass]="{
+      'text-neutral-50': activeTab() === 'secondary',
+      'text-[#777777]': activeTab() !== 'secondary'
+    }"
+    (click)="selectTab('secondary')"
+  >
+    {{ labelSecondary() }}
+  </div>
+
+  <div 
+    class="w-1/2 h-[3px] bottom-0 transition-transform duration-500 ease-in-out absolute bg-[#FF5252]"
+    [style.transform]="activeTab() === 'primary' ? 'translateX(0%)' : 'translateX(100%)'"
+  ></div>
+</div>

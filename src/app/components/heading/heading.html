@@ -1,0 +1,32 @@
+<div
+  [ngClass]="{'flex items-center justify-between': showSearch()}"
+  class="h-11 text-neutral-50 mb-5"
+>
+  <h1 [ngClass]="{'flex items-center gap-3': showSearch()}" class="font-semibold text-xl">
+    @if (showBack()) {
+      <a routerLink="/">
+        <lucide-icon name="ArrowLeft" [size]="20" />
+      </a>
+    }
+    {{ heading() }}
+  </h1>
+  @if (showSearch() || showAddCommunity()) {
+    <div class="flex items-center gap-1.5">
+      @if (showSearch()) {
+        <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+          <lucide-icon name="Search" [size]="20" />
+        </button>
+      }
+      @if (showAddCommunity()) {
+        <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+          <lucide-icon name="Plus" [size]="20" />
+        </button>
+      }
+      @if (showOptions()) {
+        <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+          <lucide-icon name="Ellipsis" [size]="20" />
+        </button>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,16 @@
+<div class="flex items-center justify-between p-5 rounded-xl border border-neutral-800 bg-neutral-900">
+  <div class="flex items-center gap-4">
+    <div class="flex items-center justify-center w-12 h-12 text-neutral-50 rounded-full border border-neutral-800 bg-[#212121]">
+      <lucide-icon name="Users" [size]="16" />
+    </div>
+    <div class="flex flex-col">
+      <div [routerLink]="['/communities', community()?.slug]" class="font-semibold text-base text-neutral-50 cursor-pointer hover:underline">{{ community()?.name }}</div>
+      <div class="flex gap-1 items-center text-[#777777]">
+        <div class="text-sm">{{ community()?.description }}</div>
+      </div>
+    </div>
+  </div>
+  <button class="font-semibold text-neutral-50 text-xs cursor-pointer px-5 py-2 rounded-full transition-all border-2 border-neutral-800 hover:bg-neutral-800">
+    Follow
+  </button>
+</div>

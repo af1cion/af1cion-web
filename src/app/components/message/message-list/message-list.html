@@ -1,0 +1,20 @@
+@for (message of messagesList(); track $index) {
+  <div [class.border-l-[#FF5252]]="$index === 0" class="p-5 cursor-pointer transition-all border-l-2 border-b-2 border-b-[#181818] hover:bg-neutral-900/40">
+    <div class="flex items-start gap-3">
+      <div class="flex items-center justify-center w-9 h-9 text-neutral-50 rounded-full border border-neutral-800 bg-[#212121]">
+        <span class="font-medium text-xs">{{ message.name.charAt(0).toLocaleUpperCase() }}</span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+          <div class="font-semibold text-sm text-neutral-50">{{ message.name }}</div>
+          <div class="flex gap-1 items-center text-[#777777]">
+            <div class="text-sm">{{ '@' + message.username }}</div>
+            <span class="text-xs">•</span>
+            <div class="text-sm">8h</div>
+          </div>
+        </div>
+        <p class="max-w-[180px] text-sm text-neutral-50 truncate">{{ message.message }}</p>
+      </div>
+    </div>
+  </div>
+}

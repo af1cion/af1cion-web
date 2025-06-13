@@ -1,0 +1,41 @@
+<div class="w-full h-42 mt-6 rounded-xl bg-neutral-900"></div>
+
+<app-main-content>
+  <div class="flex flex-1 flex-col space-y-5 px-5">
+    <div class="flex -mt-12 gap-4">
+      <div class="flex items-center justify-center min-w-20 min-h-20 text-neutral-50 rounded-full border-3 border-black bg-neutral-900">
+        <lucide-icon name="Users" [size]="22" />
+      </div>
+      <div class="flex items-center justify-between w-full pt-8">
+        <h1 class="flex items-center font-semibold text-xl text-neutral-50 gap-2">
+          r/España <lucide-icon name="BadgeCheck" [size]="16" [strokeWidth]="2" color="#FF5252" />
+        </h1>
+        <div class="flex items-center gap-1.5">
+          <button class="font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 rounded-full transition-all border-2 border-neutral-800 hover:text-[#FF5252] hover:border-[#FF5252]">
+            Following
+          </button>
+          <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+            <lucide-icon name="Search" [size]="20" />
+          </button>
+          <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+            <lucide-icon name="Ellipsis" [size]="22" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="font-semibold text-neutral-50 text-base mt-2 mb-6">Feed</h3>
+    <app-post-write />
+    <div class="mb-5 border-t border-[#777777]/20"></div>
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+  </div>
+
+  <app-info-sidebar
+    [showInvite]="true"
+    [showDescriptionCommunity]="true"
+  />
+</app-main-content>

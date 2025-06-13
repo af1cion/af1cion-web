@@ -1,0 +1,22 @@
+<app-main-content>
+  <div class="flex flex-col space-y-5">
+    <app-post-write />
+    
+    <h3 class="font-semibold text-neutral-50 text-base">News</h3>
+    <app-carousel />
+  
+    <h3 class="font-semibold text-neutral-50 text-base mt-2 mb-6">For you</h3>
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+    <app-post-card />
+  </div>
+
+  <app-info-sidebar
+    [showPoints]="true"
+    [showInvite]="true"
+    [showFollow]="true"
+  />
+</app-main-content>
+

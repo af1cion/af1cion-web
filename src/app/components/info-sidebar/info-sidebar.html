@@ -1,0 +1,72 @@
+<div class="w-full top-26 space-y-5 self-start sticky">
+  @if (showDescriptionCommunity()) {
+    <div class="p-5 rounded-xl border border-neutral-800 bg-neutral-900">
+      <h3 class="font-semibold text-neutral-50 text-sm mb-2">r/España</h3>
+      <p class="text-sm text-[#777777]">lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      <div class="flex flex-col text-sm text-[#777777] mt-4 gap-2">
+        <div class="flex items-center gap-2">
+          <lucide-icon name="Cake" [size]="16" />
+          Created Jun 10, 2025
+        </div>
+        <div class="flex items-center gap-2">
+          <lucide-icon name="Globe" [size]="16" />
+          Public
+        </div>
+        <div class="flex items-center gap-2">
+          <lucide-icon name="Users" [size]="16" />
+          185k Members
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (showPoints()) {
+    <div class="flex items-start text-neutral-50 cursor-pointer p-5 gap-3 rounded-xl bg-[#301ffd]">
+      <div class="flex items-center justify-center w-10 h-10 rounded-full border border-neutral-50/20">
+        <lucide-icon name="Gem" [size]="24" [strokeWidth]="2" />
+      </div>
+      <div class="fle flex-col gap-2">
+        <h1 class="font-medium text-xs">Points Superlicense</h1>
+        <span class="font-bold text-3xl">506</span>
+      </div>
+    </div>
+  }
+
+  @if (showInvite()) {
+    <div class="flex flex-col items-start text-black cursor-pointer p-5 gap-1 rounded-xl bg-[#e6fd1a] relative">
+      <h1 class="font-bold text-3xl">Invite</h1>
+      <p class="font-medium text-xs">Invite your friends and earn points on your super license</p>
+      <div class="flex items-center justify-center w-6 h-6 text-neutral-50 top-2 right-2 rounded-full bg-black absolute">
+        <lucide-icon name="MousePointer2" [size]="14" [strokeWidth]="2" class="rotate-45" />
+      </div>
+    </div>
+  }
+
+  @if (showFollow()) {
+    <div class="p-5 rounded-xl border border-neutral-800 bg-neutral-900">
+      <h3 class="font-semibold text-neutral-50 text-base mb-6">Who to follow</h3>
+      <div class="flex flex-col gap-4">
+        @for (user of users; track $index) {
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex items-center justify-center w-9 h-9 text-neutral-50 rounded-full border border-neutral-800 bg-[#212121]">
+                <span class="font-medium text-xs">{{ user.name.charAt(0).toLocaleUpperCase() }}</span>
+              </div>
+              <div class="flex flex-col">
+                <div class="font-semibold text-sm text-neutral-50">{{ user.name }}</div>
+                <div class="flex gap-1 items-center text-[#777777]">
+                  <div class="text-sm">{{ '@' + user.username }}</div>
+                </div>
+              </div>
+            </div>
+            <button class="font-semibold text-neutral-50 text-xs cursor-pointer px-4 py-2 rounded-full transition-all border-2 border-neutral-800 hover:bg-neutral-800">
+              Follow
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <p class="text-sm text-[#777777] text-center">© 2025 af1cion, All rights reserved.</p>
+</div>

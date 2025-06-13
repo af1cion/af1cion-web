@@ -1,0 +1,19 @@
+<app-main-content>
+  <div class="flex flex-1 flex-col">
+    <app-heading 
+      heading="Calendar" 
+      showSearch="true"
+    />
+    <app-tabs
+      labelPrimary="Next"
+      labelSecondary="Previous"
+      (tabChanged)="handleTabChange($event)"
+    />
+  </div>
+
+  <app-info-sidebar
+    [showPoints]="true"
+    [showInvite]="true"
+    [showFollow]="true"
+  />
+</app-main-content>

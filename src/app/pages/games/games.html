@@ -1,0 +1,38 @@
+<app-main-content>
+  <div class="flex flex-1 flex-col">
+    <app-heading heading="Games Collection" />
+
+    <div class="flex mb-10 gap-2">
+      <app-category category="Racing" />
+      <app-category category="Puzzle" />
+      <app-category category="Trivia" />
+      <app-category category="Memory" />
+      <app-category category="Tapping" />
+    </div>
+
+    <div class="grid grid-cols-3 gap-x-5 gap-y-8">
+      <div class="flex flex-col gap-3" (click)="handleGame()">
+        <div class="h-[235px] overflow-hidden rounded-3xl relative">
+          <img src="cover-game-1.png" alt="" class="w-full h-full object-cover" />
+          <span class="font-medium text-neutral-50 text-xs px-3 py-1 right-2 top-2 rounded-full bg-lime-600 absolute">Nuevo</span>
+        </div>
+        <div>
+          <span class="text-sm text-[#777777]">Racing</span>
+          <h3 class="font-medium text-neutral-50">TapTap Racing</h3>
+        </div>
+      </div>
+    </div>
+
+    @if (showGame) {
+      <div class="w-full h-full left-0 top-0 fixed z-50">
+        
+      </div>
+    }
+  </div>
+
+  <app-info-sidebar
+    [showPoints]="true"
+    [showInvite]="true"
+    [showFollow]="true"
+  />
+</app-main-content>

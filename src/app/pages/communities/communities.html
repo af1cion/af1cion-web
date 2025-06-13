@@ -1,0 +1,63 @@
+<app-main-content>
+  <div class="flex flex-1 flex-col">
+    <app-heading 
+      heading="Communities" 
+      showSearch="true" 
+      showAddCommunity="true"
+    />
+
+    <app-tabs
+      labelPrimary="Explore"
+      labelSecondary="My Communities"
+      (tabChanged)="handleTabChange($event)"
+    />
+
+    @if (isLoading()) {
+      <div class="grid grid-cols-1 gap-3">
+        <div class="flex flex-wrap mb-10 gap-2 animate-pulse">
+          @for (_ of [0, 1, 2]; track $index) {
+            <div class="w-16 h-6 rounded-full bg-neutral-800"></div>
+          }
+        </div>
+        @for (_ of [0, 1, 2]; track $index) {
+          <div class="flex items-center justify-between p-5 rounded-xl bg-[#111111] animate-pulse">
+            <div class="flex items-center gap-5">
+              <div class="w-10 h-10 rounded-full bg-neutral-800"></div>
+              <div class="flex flex-col gap-3">
+                <div class="w-32 h-2 rounded-full bg-neutral-800"></div>
+                <div class="w-16 h-2 rounded-full bg-neutral-800"></div>
+              </div>
+            </div>
+            <div class="w-10 h-4 rounded-full bg-neutral-800"></div>
+          </div>
+        }
+      </div>
+    } @else if (activeTab() === 'primary') {
+      <div class="flex flex-wrap mb-10 gap-2.5">
+        <app-category category="Paises" [isSelected]="true" />
+        <app-category category="Pilotos" />
+        <app-category category="Equipos" />
+        <app-category category="SimRacing" />
+        <app-category category="Idiomas" />
+        <app-category category="Leyendas" />
+        <app-category category="Temporadas" />
+        <app-category category="Circuitos" />
+        <app-category category="Contenidos y Medios" />
+      </div>
+      
+      <div class="grid grid-cols-1 gap-3">
+        @for (community of communities; track $index) {
+          <app-community-card [community]="community" [index]="$index" />
+        }
+      </div>
+    } @else {
+      
+    }
+  </div>
+
+  <app-info-sidebar
+    [showPoints]="true"
+    [showInvite]="true"
+    [showFollow]="true"
+  />
+</app-main-content>
