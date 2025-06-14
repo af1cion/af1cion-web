@@ -34,9 +34,9 @@ export const routes: Routes = [
       {
         path: 'community',
         loadComponent: () =>
-          import('./pages/communities/community-details/community-details').then(
-            (m) => m.CommunityDetails
-          ),
+          import(
+            './pages/communities/community-details/community-details'
+          ).then((m) => m.CommunityDetails),
       },
       {
         path: 'news',
@@ -47,20 +47,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/games/games').then((m) => m.Games),
       },
       {
-        path: 'notifications',
-        loadComponent: () => import('./pages/notifications/notifications').then((m) => m.Notifications),
-      },
-      {
         path: 'messages',
-        loadComponent: () => import('./pages/messages/messages').then((m) => m.Messages),
+        loadComponent: () =>
+          import('./pages/messages/messages').then((m) => m.Messages),
       },
-    ]
+    ],
   },
   {
     path: 'login',
     canActivate: [NoAuthGuard],
-    loadComponent: () =>
-      import('./auth/login/login').then((m) => m.Login),
+    loadComponent: () => import('./auth/login/login').then((m) => m.Login),
   },
   {
     path: '**',

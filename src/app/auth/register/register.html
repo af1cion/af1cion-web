@@ -1,0 +1,100 @@
+<form (submit)="handleSubmit($event)">
+  <h3 class="font-semibold text-neutral-50 text-xl">
+    @switch (step()) {
+      @case ('email') { Enter your email }
+      @case ('verify') { Verification code }
+      @case ('complete') { Completing registration 🎉 }
+    }
+  </h3>
+  <p class="text-[#777777] text-sm mt-1 mb-5">
+    @switch (step()) {
+      @case ('email') { We will send a verification code. }
+      @case ('verify') { We've sent a verification code to name.com. }
+      @case ('complete') { Create your username and password to finish. }
+    }
+  </p>
+
+  @if (step() === 'email') {
+    <div class="flex flex-col gap-2">
+      <input 
+        type="email" 
+        placeholder="Email" 
+        class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
+        [value]="form().email"
+        (input)="handleEmailInput($event)"
+      />
+    </div>
+  }
+
+  @if (step() === 'verify') {
+    <div class="flex justify-between gap-3 gap-2">
+      @for (digit of verification.code; track $index) {
+        <input
+          [id]="'code-' + $index"
+          type="text"
+          maxlength="1"
+          inputmode="numeric"
+          class="w-12 h-12 text-center text-base text-neutral-50 rounded-xl border-2 border-neutral-800 outline-none bg-transparent focus:border-neutral-50"
+          (input)="handleInput($index, $event)"
+          (keydown)="handleBackspace($index, $event)"
+        />
+      }
+    </div>
+    <div class="text-[#777777] text-sm mt-5">Didn't receive any email?
+      <button 
+        type="button" 
+        class="font-bold cursor-pointer ml-1 underline disabled:no-underline disabled:cursor-default"
+        [ngClass]="{'text-neutral-50': verification.canResend()}"
+        [disabled]="!verification.canResend()" 
+        (click)="handleResend()"
+      >
+        {{ verification.canResend() 
+          ? 'Resend' 
+          : 'Resend in 0:' + (verification.countdown() < 10 ? '0' + verification.countdown() : verification.countdown()) 
+        }}
+      </button>
+    </div>
+  }
+
+  @if (step() === 'complete') {
+    <div class="flex flex-col my-4 gap-2">
+      <input 
+        type="text" 
+        placeholder="username" 
+        class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
+        [value]="form().username"
+        (input)="handleUsernameInput($event)"
+      />
+    </div>
+    <div class="flex flex-col mt-4 gap-2">
+      <input 
+        type="password" 
+        placeholder="Password" 
+        class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
+        [value]="form().password"
+        (input)="handlePasswordInput($event)"
+      />
+    </div>
+  }
+
+  <div class="flex items-center justify-center mt-7">
+    <button 
+      type="submit"
+      class="flex items-center h-11 font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 gap-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90 disabled:text-neutral-50/50 disabled:cursor-not-allowed disabled:bg-neutral-900"
+      [disabled]="
+        (step() === 'email' && !isEmailValid()) ||
+        (step() === 'verify' && !isCodeValid()) ||
+        (step() === 'complete' && (!isUsernameValid() || !isPasswordValid()))
+      "
+    >
+      @if (isLoading()) {
+        <lucide-icon name="LoaderCircle" [size]="22" class="animate-spin" />
+      }
+      @switch (step()) {
+        @case ('email') { Send Code }
+        @case ('verify') { Continue }
+        @case ('complete') { Continue }
+      }
+    </button>
+  </div>
+</form>

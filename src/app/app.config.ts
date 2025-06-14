@@ -42,7 +42,8 @@ import {
   MousePointer2,
   Cake,
   BadgeCheck,
-  ArrowLeft
+  ArrowLeft,
+  LoaderCircle
 } from 'lucide-angular';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -85,7 +86,8 @@ export const appConfig: ApplicationConfig = {
         MousePointer2,
         Cake,
         BadgeCheck,
-        ArrowLeft
+        ArrowLeft,
+        LoaderCircle
       })
     ),
   ],

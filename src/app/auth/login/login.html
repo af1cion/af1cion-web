@@ -4,37 +4,48 @@
     <img src="/login.webp" alt="" class="w-full h-full object-cover" />
     <div class="inset-0 bg-black/40 absolute"></div>
   </div>
-  <div class="flex flex-col justify-center max-w-xl mx-auto space-y-10">
-    <div class="max-w-xl font-bold text-6xl text-neutral-50">Your digital paddock starts here!</div>
+  <div class="flex flex-col justify-center min-w-[580px] mx-auto space-y-10">
+    <div class="max-w-xl font-bold text-6xl text-neutral-50">
+      @if (showRegister()) {
+        <span>
+          Your race<br />begins here!
+        </span>
+      } @else {
+        <span>Your digital paddock starts here!</span>
+      }
+    </div>
     <div class="max-w-sm flex flex-col gap-5">
-      <form>
-        <h3 class="font-semibold text-neutral-50 text-xl">Login to your Account</h3>
-        <div class="flex flex-col my-4 gap-2">
-          <input 
-            type="email" 
-            placeholder="Email" 
-            class="w-full h-11 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
-            autocomplete="false"
-          />
-        </div>
-        <div class="flex flex-col mt-4 gap-2">
-          <input 
-            type="password" 
-            placeholder="Password" 
-            class="w-full h-11 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
-          />
-        </div>
-        <div class="flex items-center justify-between mt-4">
-          <a href="#" class="text-sm text-neutral-50 hover:underline">Forgot your password?</a>
-          <button 
-            type="button"
-            class="h-11 font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90"
-            (click)="handleLogin()"
-          >
-            Login
-          </button>
-        </div>
-      </form>
+      @if (showRegister()) {
+        <app-register />
+      } @else {
+        <form>
+          <h3 class="font-semibold text-neutral-50 text-xl">Login to your Account</h3>
+          <div class="flex flex-col my-4 gap-2">
+            <input 
+              type="email" 
+              placeholder="Email" 
+              class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
+            />
+          </div>
+          <div class="flex flex-col mt-4 gap-2">
+            <input 
+              type="password" 
+              placeholder="Password" 
+              class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
+            />
+          </div>
+          <div class="flex items-center justify-between mt-5">
+            <a href="#" class="text-sm text-neutral-50 hover:underline">Forgot your password?</a>
+            <button 
+              type="button"
+              class="h-11 font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90"
+              (click)="handleLogin()"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      }
 
       <div class="flex items-center gap-4 mt-4">
         <div class="flex-1 border-t border-[#777777]/20"></div>
@@ -52,7 +63,12 @@
           <img src="/social/x.svg" alt="" class="w-6 h-6">
         </div>
       </div>
-      <a href="#" class="text-sm text-neutral-50 text-center">Don't have an account? <span class="font-bold hover:underline">Register now</span></a>
+      
+      <div class="text-base text-neutral-50 text-center">{{ showRegister() ? 'Already have an account?' : 'Don\'t have an account?' }}
+        <button class="font-bold cursor-pointer ml-1 hover:underline" (click)="handleToggleRegister()">
+          {{ showRegister() ? 'Sign in' : 'Register now' }}
+        </button>
+      </div>
     </div>
   </div>
 </div>
