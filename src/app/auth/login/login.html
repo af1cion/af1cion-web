@@ -74,7 +74,7 @@
       }
       
      @if (!showForgotPassword()) {
-        <div class="text-sm text-neutral-50 text-center">
+        <div class="text-base text-neutral-50 text-center">
           {{ showRegister() ? 'Already have an account?' : 'Don\'t have an account?' }}
           <button class="font-bold cursor-pointer ml-1 hover:underline" (click)="handleToggleRegister()">
             {{ showRegister() ? 'Sign in' : 'Register now' }}
