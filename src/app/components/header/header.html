@@ -10,11 +10,15 @@
       </button>
       @if (isDropdownOpen()) {
         <div class="notification-dropdown w-[380px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
-          <div class="flex items-center justify-between pt-3 px-5 mb-5">
+          <div class="flex items-center justify-between pt-3 px-5">
             <h3 class="font-semibold text-neutral-50 text-base">Radio check</h3>
             <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
               <lucide-icon name="Ellipsis" [size]="20" />
             </button>
+          </div>
+          <div class="flex flex-col items-center justify-center min-h-[130px] pb-5 px-5 gap-2">
+            <lucide-icon name="BellOff" [size]="30" class="text-[#777777]" />
+            <p class="font-medium text-sm text-[#777777]">You have no notifications</p>
           </div>
         </div>
       }

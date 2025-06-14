@@ -43,7 +43,8 @@ import {
   Cake,
   BadgeCheck,
   ArrowLeft,
-  LoaderCircle
+  LoaderCircle,
+  BellOff
 } from 'lucide-angular';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -87,7 +88,8 @@ export const appConfig: ApplicationConfig = {
         Cake,
         BadgeCheck,
         ArrowLeft,
-        LoaderCircle
+        LoaderCircle,
+        BellOff
       })
     ),
   ],
