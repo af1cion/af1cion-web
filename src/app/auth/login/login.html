@@ -38,9 +38,12 @@
             <a href="#" class="text-sm text-neutral-50 hover:underline">Forgot your password?</a>
             <button 
               type="button"
-              class="h-11 font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90"
+              class="flex items-center h-11 font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 gap-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90"
               (click)="handleLogin()"
             >
+              @if (isLoading()) {
+                <lucide-icon name="LoaderCircle" [size]="22" class="animate-spin" />
+              }
               Login
             </button>
           </div>
