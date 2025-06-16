@@ -52,7 +52,7 @@ export class Messages {
     {
       fromMe: false,
       createdAt: new Date('2025-06-06T10:03:00'),
-      texts: ['Wanna go to the GP this weekend?'],
+      texts: ['Wanna go to the GP this weekend? 😍'],
     },
   ];
 
