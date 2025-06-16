@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { formatDistanceToNow } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import { LucideAngularModule } from 'lucide-angular';
 
 import {
@@ -57,6 +57,6 @@ export class Messages {
   ];
 
   getRelativeTime(date: Date): string {
-    return formatDistanceToNow(date, { addSuffix: true, locale: es });
+    return formatDistanceToNow(date, { addSuffix: true, locale: enUS });
   }
 }
