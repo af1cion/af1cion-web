@@ -29,9 +29,34 @@
         </button>
       </div>
     </div>
-    <div class="flex-1 rounded-xl overflow-y-auto mb-4 bg-neutral-900">
+    <div class="flex flex-col h-full overflow-y-auto mb-4 p-5 gap-2 rounded-xl bg-neutral-900">
+      @for (message of messages; track $index) {
+        <div
+          class="flex flex-col"
+          [ngClass]="{
+            'items-start': !message.fromMe,
+            'items-end': message.fromMe
+          }"
+        >
+          @for (text of message.texts; track $index) {
+            <div
+              class="max-w-[75%] font-medium text-sm px-4 py-2 rounded-full mt-1"
+              [ngClass]="{
+                'text-neutral-100 bg-[#323232] rounded-bl-none': !message.fromMe,
+                'text-neutral-50 bg-[#FF5252] rounded-br-none': message.fromMe
+              }"
+            >
+              {{ text }}
+            </div>
+          }
 
+          <span class="text-xs text-[#777777] mt-1 px-2">
+            {{ getRelativeTime(message.createdAt) }}
+          </span>
+        </div>
+      }
     </div>
+
     <app-message-write />
   </div>
 </app-main-content>

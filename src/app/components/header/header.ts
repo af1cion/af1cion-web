@@ -9,24 +9,30 @@ import { LucideAngularModule } from 'lucide-angular';
   styles: '',
 })
 export class Header {
-  public isDropdownOpen = signal(false);
+  public isNotificationOpen = signal(false);
+  public isProfileOpen = signal(false);
 
-  toggleDropdown() {
-    this.isDropdownOpen.set(!this.isDropdownOpen());
+  toggleNotification() {
+    this.isNotificationOpen.set(!this.isNotificationOpen());
+    this.isProfileOpen.set(false);
+  }
+
+  toggleProfile() {
+    this.isProfileOpen.set(!this.isProfileOpen());
+    this.isNotificationOpen.set(false);
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    const dropdown = document.querySelector('.notification-dropdown');
-    const bell = document.querySelector('.notification-bell');
+    const notifEl = document.querySelector('.notification-dropdown');
+    const profileEl = document.querySelector('.profile-dropdown');
 
-    if (
-      dropdown &&
-      !dropdown.contains(event.target as Node) &&
-      bell &&
-      !bell.contains(event.target as Node)
-    ) {
-      this.isDropdownOpen.set(false);
+    if (notifEl && !notifEl.contains(event.target as Node)) {
+      this.isNotificationOpen.set(false);
+    }
+
+    if (profileEl && !profileEl.contains(event.target as Node)) {
+      this.isProfileOpen.set(false);
     }
   }
 }

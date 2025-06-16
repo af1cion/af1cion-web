@@ -21,6 +21,7 @@
     "@angular/ssr": "^19.2.1",
     "@ngrx/signals": "^19.2.1",
     "@tailwindcss/postcss": "^4.1.8",
+    "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "lucide-angular": "^0.513.0",
     "postcss": "^8.5.4",

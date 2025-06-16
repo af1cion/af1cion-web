@@ -4,12 +4,12 @@
     <a routerLink="/messages">
       <lucide-icon name="Send" [size]="22" class="text-neutral-50" />
     </a>
-    <div #bell class="flex items-center justify-center h-full notification-bell relative">
-      <button (click)="toggleDropdown()" class="cursor-pointer">
+    <div class="flex items-center justify-center h-full notification-dropdown relative">
+      <button (click)="toggleNotification()" class="cursor-pointer">
         <lucide-icon name="Bell" [size]="22" class="text-neutral-50" />
       </button>
-      @if (isDropdownOpen()) {
-        <div class="notification-dropdown w-[380px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
+      @if (isNotificationOpen()) {
+        <div class="w-[380px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
           <div class="flex items-center justify-between pt-3 px-5">
             <h3 class="font-semibold text-neutral-50 text-base">Radio check</h3>
             <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
@@ -23,10 +23,44 @@
         </div>
       }
     </div>
-    <a href="#">
-      <div class="flex items-center justify-center w-9 h-9 rounded-full bg-neutral-50">
-        <span class="font-medium text-sm">N</span>
-      </div>
-    </a>
+    <div class="flex items-center justify-center h-full profile-dropdown relative">
+      <button (click)="toggleProfile()" class="cursor-pointer">
+        <div class="flex items-center justify-center w-9 h-9 rounded-full bg-neutral-50">
+          <span class="font-medium text-sm">N</span>
+        </div>
+      </button>
+      @if (isProfileOpen()) {
+        <div class="w-[320px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
+          <div class="flex items-center gap-3 mb-5 pt-5 px-5">
+            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-neutral-50">
+              <span class="font-medium text-sm">N</span>
+            </div>
+            <h3 class="font-semibold text-neutral-50 text-sm">Nicolas Lobos</h3>
+          </div>
+          <div class="flex flex-col items-start text-sm text-neutral-50 pb-2 px-5 [&>a]:py-3.5">
+            <a href="#" class="flex items-center w-full gap-2">
+              <lucide-icon name="Logs" [size]="18" />
+              Panel Admin
+            </a>
+            <!-- <a href="#" class="flex items-center w-full gap-2">
+              <lucide-icon name="Trophy" [size]="18" />
+              Achievements
+            </a> -->
+            <a href="#" class="flex items-center w-full gap-2">
+              <lucide-icon name="UserCog" [size]="18" />
+              Settings
+            </a>
+            <a href="#" class="flex items-center w-full gap-2">
+              <lucide-icon name="CircleHelp" [size]="18" />
+              Support
+            </a>
+            <a href="#" class="flex items-center w-full gap-2 border-t border-[#777777]/20">
+              <lucide-icon name="LogOut" [size]="18" />
+              Log out
+            </a>
+          </div>
+        </div>
+      }
+    </div>
   </div>
 </div>

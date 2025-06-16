@@ -44,7 +44,14 @@ import {
   BadgeCheck,
   ArrowLeft,
   LoaderCircle,
-  BellOff
+  BellOff,
+  Logs,
+  UserCog,
+  UserLock,
+  LogOut,
+  Trophy,
+  Gift,
+  CircleHelp
 } from 'lucide-angular';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -89,7 +96,14 @@ export const appConfig: ApplicationConfig = {
         BadgeCheck,
         ArrowLeft,
         LoaderCircle,
-        BellOff
+        BellOff,
+        Logs,
+        UserCog,
+        UserLock,
+        LogOut,
+        Trophy,
+        Gift,
+        CircleHelp
       })
     ),
   ],
