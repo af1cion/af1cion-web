@@ -16,17 +16,42 @@ export class Login {
   public showForgotPassword = signal(false);
   public isLoading = signal(false);
 
+  public form = signal({
+    email: '',
+    password: '',
+  });
+
   private auth = inject(AuthService);
   private router = inject(Router);
+
+  handleEmailInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.form.update((f) => ({ ...f, email: value }));
+  }
+
+  handlePasswordInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.form.update((f) => ({ ...f, password: value }));
+  }
 
   handleLogin() {
     this.isLoading.set(true);
 
-    setTimeout(() => {
-      this.auth.login();
-      this.isLoading.set(false);
-      this.router.navigate(['/']);
-    }, 1000);
+    const email = this.form().email.trim();
+    const password = this.form().password.trim();
+
+    this.auth.loginWithCredentials(email, password).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('access_token', response.data);
+
+        this.isLoading.set(false);
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Error login', err);
+        this.isLoading.set(false);
+      },
+    });
   }
 
   handleToggleRegister() {

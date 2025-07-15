@@ -51,9 +51,16 @@ import {
   LogOut,
   Trophy,
   Gift,
-  CircleHelp
+  CircleHelp,
+  Trash,
+  UserPen,
+  Pencil,
+  MonitorDot,
+  ArrowDownUp,
+  Grip,
 } from 'lucide-angular';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { AuthInterceptor } from '@app/domains/interceptors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -64,7 +71,9 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
     ),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([AuthInterceptor])
+    ),
     provideClientHydration(withEventReplay()),
     importProvidersFrom(
       LucideAngularModule.pick({
@@ -103,7 +112,13 @@ export const appConfig: ApplicationConfig = {
         LogOut,
         Trophy,
         Gift,
-        CircleHelp
+        CircleHelp,
+        Trash,
+        UserPen,
+        Pencil,
+        MonitorDot,
+        ArrowDownUp,
+        Grip
       })
     ),
   ],

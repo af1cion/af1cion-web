@@ -1,0 +1,86 @@
+<div class="grid grid-cols-2 gap-40">
+  <div>
+    <h3 class="font-semibold text-lg my-6">List Drivers</h3>
+    <div class="relative overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="text-sm border-b-3 border-gray-200">
+          <tr>
+            <th scope="col" class="py-3.5">
+              Positions
+            </th>
+            <th scope="col" class="px-6 py-3.5">
+              Name
+            </th>
+            <th scope="col" class="px-6 py-3.5">
+              Points
+            </th>
+            <th scope="col" class="py-3.5"></th>
+          </tr>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="onDropDriver($event)">
+          @for (driver of drivers; track $index) {
+            <tr cdkDrag class="[&>td]:h-10 border-b border-gray-200">
+              <td class="py-3">
+                {{ driver.positions }}
+              </td>
+              <td class="px-6 py-3">
+                {{ driver.name }}
+              </td>
+              <td class="px-6 py-3">
+                <span class="inline-flex items-center font-medium text-xs text-gray-600 rounded-full px-3 py-1 border border-gray-200 bg-gray-100">
+                  {{ driver.points }} pts
+                </span>
+              </td>
+              <td class="py-3" cdkDragHandle>
+                <lucide-icon name="Grip" [size]="20" class="text-gray-500 cursor-pointer" />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div>
+    <h3 class="font-semibold text-lg my-6">List Teams</h3>
+    <div class="relative overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="text-sm border-b-3 border-gray-200">
+          <tr>
+            <th scope="col" class="py-3.5">
+              Positions
+            </th>
+            <th scope="col" class="px-6 py-3.5">
+              Name
+            </th>
+            <th scope="col" class="px-6 py-3.5">
+              Points
+            </th>
+            <th scope="col" class="py-3.5"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (team of teams; track $index) {
+            <tr class="[&>td]:h-10 border-b border-gray-200">
+              <td class="py-3">
+                {{ team.positions }}
+              </td>
+              <td class="px-6 py-3">
+                {{ team.name }}
+              </td>
+              <td class="px-6 py-3">
+                <span class="inline-flex items-center font-medium text-xs text-gray-600 rounded-full px-3 py-1 border border-gray-200 bg-gray-100">
+                  {{ team.points }} pts
+                </span>
+              </td>
+              <td class="py-3">
+                <lucide-icon name="Grip" [size]="20" class="text-gray-500 cursor-pointer" />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

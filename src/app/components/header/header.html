@@ -1,18 +1,60 @@
-<div class="flex items-center justify-between w-full h-20 px-20 top-0 border-b-2 border-[#181818] bg-black sticky z-10">
+<div
+  class="flex items-center justify-between w-full h-20 px-20 top-0 border-b-2 border-[#181818] sticky z-10"
+  [ngClass]="{
+    'shadow-md': isDashboard(),
+    'border-transparent': isDashboard(),
+    'bg-neutral-50': isDashboard(),
+    'bg-black': !isDashboard(),
+  }"
+>
   <div></div>
   <div class="flex items-center h-full gap-6">
     <a routerLink="/messages">
-      <lucide-icon name="Send" [size]="22" class="text-neutral-50" />
+      <lucide-icon 
+        name="Send" 
+        [size]="22" 
+        [class.text-black]="isDashboard()" 
+        [class.text-neutral-50]="!isDashboard()" 
+      />
     </a>
     <div class="flex items-center justify-center h-full notification-dropdown relative">
       <button (click)="toggleNotification()" class="cursor-pointer">
-        <lucide-icon name="Bell" [size]="22" class="text-neutral-50" />
+        <lucide-icon 
+          name="Bell" 
+          [size]="22" 
+          [class.text-black]="isDashboard()" 
+          [class.text-neutral-50]="!isDashboard()" 
+        />
       </button>
       @if (isNotificationOpen()) {
-        <div class="w-[380px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
+        <div 
+          class="w-[380px] top-full right-0 rounded-xl border z-50 absolute"
+          [ngClass]="{
+            'shadow-md': isDashboard(),
+            'border-[#E2E8F0]': isDashboard(),
+            'border-neutral-800': !isDashboard(),
+            'bg-neutral-50': isDashboard(),
+            'bg-neutral-900': !isDashboard(),
+          }"
+        >
           <div class="flex items-center justify-between pt-3 px-5">
-            <h3 class="font-semibold text-neutral-50 text-base">Radio check</h3>
-            <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+            <h3 
+              class="font-semibold text-neutral-50 text-base"
+              [class.text-black]="isDashboard()"
+              [class.text-neutral-50]="!isDashboard()"
+            >
+              Radio check
+            </h3>
+            <button 
+              class="flex items-center justify-center w-[44px] h-[44px] cursor-pointer rounded-full transition-all"
+              [ngClass]="{
+                'text-black': isDashboard(),
+                'text-[#CCCCCC]': !isDashboard(),
+                'hover:text-neutral-50': !isDashboard(),
+                'hover:bg-neutral-200': isDashboard(),
+                'hover:bg-neutral-800': !isDashboard(),
+              }"
+            >
               <lucide-icon name="Ellipsis" [size]="20" />
             </button>
           </div>
@@ -25,20 +67,49 @@
     </div>
     <div class="flex items-center justify-center h-full profile-dropdown relative">
       <button (click)="toggleProfile()" class="cursor-pointer">
-        <div class="flex items-center justify-center w-9 h-9 rounded-full bg-neutral-50">
+        <div 
+          class="flex items-center justify-center w-9 h-9 rounded-full"
+          [class.text-neutral-50]="isDashboard()"
+          [class.bg-black]="isDashboard()"
+          [class.bg-neutral-50]="!isDashboard()"
+        >
           <span class="font-medium text-sm">N</span>
         </div>
       </button>
       @if (isProfileOpen()) {
-        <div class="w-[320px] top-full right-0 rounded-xl border border-neutral-800 bg-neutral-900 z-50 absolute">
+        <div 
+          class="w-[320px] top-full right-0 rounded-xl border z-50 absolute"
+          [ngClass]="{
+            'shadow-md': isDashboard(),
+            'border-[#E2E8F0]': isDashboard(),
+            'border-neutral-800': !isDashboard(),
+            'bg-neutral-50': isDashboard(),
+            'bg-neutral-900': !isDashboard(),
+          }"
+        >
           <div class="flex items-center gap-3 mb-5 pt-5 px-5">
-            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-neutral-50">
+            <div 
+              class="flex items-center justify-center w-9 h-9 rounded-full"
+              [class.text-neutral-50]="isDashboard()"
+              [class.bg-black]="isDashboard()"
+              [class.bg-neutral-50]="!isDashboard()"
+            >
               <span class="font-medium text-sm">N</span>
             </div>
-            <h3 class="font-semibold text-neutral-50 text-sm">Nicolas Lobos</h3>
+            <h3 
+              class="font-semibold text-sm"
+              [class.text-black]="isDashboard()"
+              [class.text-neutral-50]="!isDashboard()"
+            >
+              Nicolas Lobos
+            </h3>
           </div>
-          <div class="flex flex-col items-start text-sm text-neutral-50 pb-2 px-5 [&>a]:py-3.5">
-            <a href="#" class="flex items-center w-full gap-2">
+          <div 
+            class="flex flex-col items-start text-sm pb-2 px-5 [&>a]:py-3.5 [&>button]:py-3.5"
+            [class.text-black]="isDashboard()"
+            [class.text-neutral-50]="!isDashboard()"
+          >
+            <a routerLink="/dashboard/home" class="flex items-center w-full gap-2">
               <lucide-icon name="Logs" [size]="18" />
               Panel Admin
             </a>
@@ -46,18 +117,18 @@
               <lucide-icon name="Trophy" [size]="18" />
               Achievements
             </a> -->
-            <a href="#" class="flex items-center w-full gap-2">
+            <a routerLink="#" class="flex items-center w-full gap-2">
               <lucide-icon name="UserCog" [size]="18" />
               Settings
             </a>
-            <a href="#" class="flex items-center w-full gap-2">
+            <a routerLink="#" class="flex items-center w-full gap-2">
               <lucide-icon name="CircleHelp" [size]="18" />
               Support
             </a>
-            <a href="#" class="flex items-center w-full gap-2 border-t border-[#777777]/20">
+            <button (click)="handleLogout()" class="flex items-center w-full cursor-pointer gap-2 border-t border-[#777777]/20">
               <lucide-icon name="LogOut" [size]="18" />
               Log out
-            </a>
+            </button>
           </div>
         </div>
       }

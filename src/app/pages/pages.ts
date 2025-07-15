@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
 import { Header, NavSidebar } from '@app/components';
 
 @Component({

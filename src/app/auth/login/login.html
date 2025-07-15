@@ -27,6 +27,8 @@
           <div class="flex flex-col my-4 gap-2">
             <input 
               type="email" 
+              [value]="form().email"
+              (input)="handleEmailInput($event)"
               placeholder="Email" 
               class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
             />
@@ -34,6 +36,8 @@
           <div class="flex flex-col mt-4 gap-2">
             <input 
               type="password" 
+              [value]="form().password"
+              (input)="handlePasswordInput($event)"
               placeholder="Password" 
               class="w-full h-12 text-base text-neutral-50 px-5 py-2 rounded-full outline-none border-2 border-neutral-800 placeholder:text-[#777777] focus:border-neutral-50 focus:placeholder-neutral-50" 
             />

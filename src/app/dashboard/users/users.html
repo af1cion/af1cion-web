@@ -1,0 +1,109 @@
+<h3 class="font-semibold text-lg mb-6">List users</h3>
+  
+<div class="flex items-center justify-between mb-4">
+  <input 
+    type="text" 
+    placeholder="Search" 
+    class="min-w-sm h-10 text-sm px-5 py-2 rounded-full outline-none border-2 border-gray-300 placeholder:text-gray-400 focus:border-black focus:placeholder-black" 
+  />
+  <a routerLink="/dashboard/users" class="font-semibold text-neutral-50 text-sm cursor-pointer px-8 py-2 rounded-full transition-all bg-[#FF5252] hover:bg-[#FF5252]/90">
+    Create user
+  </a>
+</div>
+
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left">
+    <thead class="text-sm border-b-3 border-gray-200">
+      <tr>
+        <th scope="col" class="py-3.5">
+          Name
+        </th>
+        <th scope="col" class="px-6 py-3.5">
+          Email
+        </th>
+        <th scope="col" class="px-6 py-3.5">
+          Country
+        </th>
+        <th scope="col" class="px-6 py-3.5">
+          Role
+        </th>
+        <th scope="col" class="px-6 py-3.5">
+          Auth Method
+        </th>
+        <th scope="col" class="px-6 py-3.5">
+          Status
+        </th>
+        <th scope="col" class="pr-6 py-3.5">
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track $index) {
+        <tr class="[&>td]:h-10 border-b border-gray-200">
+          <td class="py-3">
+            {{ user.name }}
+          </td>
+          <td class="px-6 py-3">
+            {{ user.email }}
+          </td>
+          <td class="px-6 py-3">
+            {{ user.country }}
+          </td>
+          <td class="px-6 py-3">
+            <span class="inline-flex items-center font-medium text-xs text-gray-600 rounded-full px-3 py-1 border border-gray-200 bg-gray-100">
+              {{ user.role }}
+            </span>
+          </td>
+          <td class="px-6 py-3">
+            <span class="inline-flex items-center font-medium text-xs text-gray-600 rounded-full px-3 py-1 border border-gray-200 bg-gray-100">
+              {{ user.authMethod }}
+            </span>
+          </td>
+          <td class="px-6 py-3">
+            <span 
+              class="inline-flex items-center font-medium text-xs  rounded-full px-3 py-1 border"
+              [ngClass]="{
+                'text-lime-600 border-lime-200 bg-lime-100': user.status === 'Active',
+                'text-[#FF5252] border-[#FF5252]/20 bg-[#FF5252]/10': user.status === 'Suspended',
+              }"
+            >
+              {{ user.status }}
+            </span>
+          </td>
+          <td class="flex items-center pr-4 py-3 gap-4">
+            <button class="flex items-center justify-center text-black cursor-pointer">
+              <lucide-icon name="Trash" [size]="16" class="transition-all hover:text-red-500" />
+            </button>
+            <button class="flex items-center justify-center text-black cursor-pointer">
+              <lucide-icon name="Pencil" [size]="16" class="transition-all hover:text-cyan-500" />
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <nav class="flex items-center justify-between pt-8">
+    <span class="text-sm text-gray-600">
+      Showing 
+      <span class="font-semibold">1 - 10</span> 
+      of 
+      <span class="font-semibold">1000</span>
+    </span>
+    <ul class="flex h-8 -space-x-px text-sm">
+      <li>
+        <a href="#" class="flex items-center justify-center h-8 text-gray-600 px-3 leading-tight rounded-s-lg border border-gray-200 hover:bg-gray-100">Previous</a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center justify-center h-8 text-gray-600 px-3 leading-tight border border-gray-200 hover:bg-gray-100">1</a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center justify-center h-8 text-gray-600 px-3 leading-tight border border-gray-200 hover:bg-gray-100">2</a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center justify-center h-8 text-gray-600 px-3 leading-tight rounded-e-lg border border-gray-200 hover:bg-gray-100">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

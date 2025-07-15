@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { AuthService } from '@app/auth/auth.service';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -35,6 +36,8 @@ export class Register {
     () => this.form().password.trim().length > 0
   );
 
+  private auth = inject(AuthService);
+
   handleEmailInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.form.update((f) => ({ ...f, email: value }));
@@ -55,27 +58,40 @@ export class Register {
     const currentStep = this.step();
 
     if (currentStep === 'email') {
+      const email = this.form().email.trim();
       this.isLoading.set(true);
 
-      setTimeout(() => {
-        this.startCountdown();
-        this.step.set('verify');
-        this.isLoading.set(false);
-      }, 1000);
+      this.auth.sendCodeMail(email).subscribe({
+        next: (response) => {
+          console.log('Código enviado', response);
+          this.startCountdown();
+          this.step.set('verify');
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error enviando código', err);
+          this.isLoading.set(false);
+        },
+      });
 
       return;
     }
 
     if (currentStep === 'verify') {
       const code = this.verification.code.map((d) => d()).join('');
-      console.log({ code });
-
       this.isLoading.set(true);
 
-      setTimeout(() => {
-        this.step.set('complete');
-        this.isLoading.set(false);
-      }, 1000);
+      this.auth.checkCode(code).subscribe({
+        next: (response) => {
+          console.log('Código verificado', response);
+          this.step.set('complete');
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error verificando código', err);
+          this.isLoading.set(false);
+        },
+      });
 
       return;
     }
@@ -86,13 +102,18 @@ export class Register {
       const username = this.form().username;
       const password = this.form().password;
 
-      console.log({ email, code, username, password });
-
       this.isLoading.set(true);
 
-      setTimeout(() => {
-        this.isLoading.set(false);
-      }, 1000);
+      this.auth.createAccount(email, username, password).subscribe({
+        next: (response) => {
+          console.log('Credenciales creadas', response);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error creando credenciales', err);
+          this.isLoading.set(false);
+        },
+      });
 
       return;
     }
