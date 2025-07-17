@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { formatDistanceToNow } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { FormsModule } from '@angular/forms';
@@ -66,12 +72,27 @@ export class Messages implements OnInit {
 
   // Acá va el historial de todos los chats, clave = roomId
   public allMessages: Record<string, Message[]> = {};
+  @ViewChild('chatContainer') chatContainer!: ElementRef<HTMLDivElement>;
 
   // Getter: muestra solo los mensajes de la sala actual
   get messages(): Message[] {
     return this.roomId && this.allMessages[this.roomId]
       ? this.allMessages[this.roomId]
       : [];
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom() {
+    // Espera al siguiente ciclo para asegurar que los mensajes estén renderizados
+    setTimeout(() => {
+      if (this.chatContainer && this.chatContainer.nativeElement) {
+        this.chatContainer.nativeElement.scrollTop =
+          this.chatContainer.nativeElement.scrollHeight;
+      }
+    }, 0);
   }
 
   getRelativeTime(date: Date): string {
@@ -116,9 +137,10 @@ export class Messages implements OnInit {
     this.socket.getMessages(this.roomId).subscribe({
       next: (resp) => {
         console.log('Mensajes previos:', resp);
-        const mensajesBackend = resp.data || [];
-
-        // Transforma el array de mensajes al formato de tu UI
+        const mensajesBackend = (resp.data || []).sort(
+          (a: any, b: any) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
         this.allMessages[this.roomId!] = mensajesBackend.map((msg: any) => ({
           fromMe: msg.senderId === this.currentUserId,
           createdAt: new Date(msg.createdAt),
