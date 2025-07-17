@@ -87,7 +87,7 @@ export class Messages implements OnInit {
     this.socket.onMessage().subscribe((msg) => {
       // Determina la sala correcta
       const otherUserId = msg.from === this.currentUserId ? msg.to : msg.from;
-      const roomId = [this.currentUserId, otherUserId].sort().join('-');
+      const roomId = [this.currentUserId, otherUserId].sort().join('_');
       if (!this.allMessages[roomId]) this.allMessages[roomId] = [];
 
       const isMine = msg.from === this.currentUserId;
@@ -104,9 +104,31 @@ export class Messages implements OnInit {
     console.log('Mi id:', this.currentUserId, 'Chat con:', userId);
 
     this.selectedUser = this.users.find((u) => u.id === userId);
-    this.roomId = [this.currentUserId, userId].sort().join('-');
+    this.roomId = [this.currentUserId, userId].sort().join('_');
     this.socket.joinRoom(this.currentUserId, userId);
+
+    if (!this.roomId) return;
+
     if (!this.allMessages[this.roomId]) this.allMessages[this.roomId] = [];
+
+    console.log(this.roomId);
+
+    this.socket.getMessages(this.roomId).subscribe({
+      next: (resp) => {
+        console.log('Mensajes previos:', resp);
+        const mensajesBackend = resp.data || [];
+
+        // Transforma el array de mensajes al formato de tu UI
+        this.allMessages[this.roomId!] = mensajesBackend.map((msg: any) => ({
+          fromMe: msg.senderId === this.currentUserId,
+          createdAt: new Date(msg.createdAt),
+          texts: [msg.content],
+        }));
+      },
+      error: (err) => {
+        console.error('Error cargando mensajes del chat:', err);
+      },
+    });
   }
 
   handleSendMessage() {

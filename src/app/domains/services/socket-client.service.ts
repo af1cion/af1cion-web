@@ -1,10 +1,14 @@
 import { io, Socket } from 'socket.io-client';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ChatSocketService {
   private socket: Socket;
+  private baseUrl = 'https://svtf66kz-3010.brs.devtunnels.ms/chat';
+
+  private _http = inject(HttpClient);
 
   constructor() {
     this.socket = io('https://svtf66kz-3010.brs.devtunnels.ms/chat');
@@ -36,4 +40,9 @@ export class ChatSocketService {
   disconnect() {
     this.socket.disconnect();
   }
+
+
+  getMessages(roomId: string): Observable<any> {
+  return this._http.get(`${this.baseUrl}/message/${roomId}`);
+}
 }
