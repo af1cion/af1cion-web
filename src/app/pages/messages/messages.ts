@@ -118,6 +118,8 @@ export class Messages implements OnInit {
         createdAt: new Date(msg.timestamp),
         texts: [msg.content],
       });
+
+      this.scrollToBottom();
     });
   }
 
@@ -146,6 +148,8 @@ export class Messages implements OnInit {
           createdAt: new Date(msg.createdAt),
           texts: [msg.content],
         }));
+
+        this.scrollToBottom();
       },
       error: (err) => {
         console.error('Error cargando mensajes del chat:', err);
