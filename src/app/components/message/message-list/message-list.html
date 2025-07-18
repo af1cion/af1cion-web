@@ -1,5 +1,10 @@
 @for (message of messagesList(); track $index) {
-  <div [class.border-l-[#FF5252]]="$index === 0" class="p-5 cursor-pointer transition-all border-l-2 border-b-2 border-b-[#181818] hover:bg-neutral-900/40">
+  <div 
+  (click)="onSelect(message.id)" 
+    [ngClass]="{
+      'border-l-[#FF5252]': message.id === selectedId
+    }" 
+    class="p-5 cursor-pointer transition-all border-l-2 border-b-2 border-b-[#181818] hover:bg-neutral-900/40">
     <div class="flex items-start gap-3">
       <div class="flex items-center justify-center w-9 h-9 text-neutral-50 rounded-full border border-neutral-800 bg-[#212121]">
         <span class="font-medium text-xs">{{ message.name.charAt(0).toLocaleUpperCase() }}</span>

@@ -5,8 +5,9 @@
         rows="1"
         placeholder="Write your message here..."
         class="w-full min-h-11 text-base text-neutral-50 outline-none py-2 placeholder:text-[#777777] resize-none bg-transparent"
-        (input)="autoResize($event)"
         [value]="messageText()"
+        (input)="autoResize($event)"
+        (keydown)="onEnter($event)"
       ></textarea>
     </div>
     <div class="flex items-start gap-1.5">

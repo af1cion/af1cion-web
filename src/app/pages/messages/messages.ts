@@ -41,12 +41,14 @@ type Message = {
   styles: ``,
 })
 export class Messages implements OnInit {
-  public messagesList = [
+  public messageText = '';
+  public selectedUser: any = null;
+  public users = [
     {
-      id: 'a6174657-76c5-492e-a591-da9ce16d8809',
+      id: '6f0d29d5-3916-4d1a-849a-bae88c1d98a0',
       name: 'Nicolas Lobos',
       username: 'nicolas_lobos',
-      message: 'Lorem ipsum dolor sit amet 😁!',
+      message: 'Lorem ipsum',
     },
     {
       id: 'edb6c246-2ca1-4117-bbfb-fd94ea026555',
@@ -56,13 +58,6 @@ export class Messages implements OnInit {
     },
   ];
 
-  public messageText = '';
-  public selectedUser: any = null;
-  public users = [
-    { id: 'edb6c246-2ca1-4117-bbfb-fd94ea026555', name: 'Sergio Rojas' },
-    { id: '6f0d29d5-3916-4d1a-849a-bae88c1d98a0', name: 'Nicolas Lobos' },
-  ];
-
   private token = localStorage.getItem('access_token');
   private userPayload = this.token ? this.decodeJwtPayload(this.token) : null;
   private currentUserId = this.userPayload ? this.userPayload.id : '';
@@ -70,11 +65,10 @@ export class Messages implements OnInit {
   private socket = inject(ChatSocketService);
   public roomId: string | null = null;
 
-  // Acá va el historial de todos los chats, clave = roomId
   public allMessages: Record<string, Message[]> = {};
+
   @ViewChild('chatContainer') chatContainer!: ElementRef<HTMLDivElement>;
 
-  // Getter: muestra solo los mensajes de la sala actual
   get messages(): Message[] {
     return this.roomId && this.allMessages[this.roomId]
       ? this.allMessages[this.roomId]
@@ -86,7 +80,6 @@ export class Messages implements OnInit {
   }
 
   private scrollToBottom() {
-    // Espera al siguiente ciclo para asegurar que los mensajes estén renderizados
     setTimeout(() => {
       if (this.chatContainer && this.chatContainer.nativeElement) {
         this.chatContainer.nativeElement.scrollTop =
@@ -100,13 +93,7 @@ export class Messages implements OnInit {
   }
 
   ngOnInit() {
-    const token = localStorage.getItem('access_token');
-    console.log(this.decodeJwtPayload(token!));
-    // Puedes inicializar el chat con el primer usuario si quieres
-    // this.selectUser('a6174657-76c5-492e-a591-da9ce16d8809');
-
     this.socket.onMessage().subscribe((msg) => {
-      // Determina la sala correcta
       const otherUserId = msg.from === this.currentUserId ? msg.to : msg.from;
       const roomId = [this.currentUserId, otherUserId].sort().join('_');
       if (!this.allMessages[roomId]) this.allMessages[roomId] = [];
@@ -124,8 +111,6 @@ export class Messages implements OnInit {
   }
 
   selectUser(userId: string) {
-    console.log('Mi id:', this.currentUserId, 'Chat con:', userId);
-
     this.selectedUser = this.users.find((u) => u.id === userId);
     this.roomId = [this.currentUserId, userId].sort().join('_');
     this.socket.joinRoom(this.currentUserId, userId);

@@ -1,4 +1,4 @@
-<div class="flex gap-3 mb-4">
+<!-- <div class="flex gap-3 mb-4">
   <div
     class="flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg transition border border-neutral-700 hover:bg-neutral-800"
     [class.bg-neutral-800]="selectedUser?.id === 'edb6c246-2ca1-4117-bbfb-fd94ea026555'"
@@ -53,4 +53,75 @@
       Enviar
     </button>
   </div>
-</div>
+</div> -->
+
+
+<!-- ======nuevo diseño -->
+<app-main-content
+  [showMessages]="true"
+>
+  <div class="flex flex-1 flex-col h-[calc(100vh-80px-24px)] overflow-hidden">
+    <app-heading 
+      [heading]="'Messages'" 
+      [showSearch]="true"
+      [showBack]="true"
+    />
+    <app-message-list
+      [messagesList]="users"
+      (chatSelect)="selectUser($event)"
+    />
+  </div>
+
+  <div class="flex flex-col h-[calc(100vh-80px-24px)] overflow-hidden pb-4">
+    <div class="flex items-center justify-between rounded-xl px-5 py-4 mb-4 bg-neutral-900">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-9 h-9 text-neutral-50 rounded-full border border-neutral-800 bg-[#212121]">
+          {{ selectedUser?.name.charAt(0).toUpperCase() }}
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="font-semibold text-sm text-neutral-50 cursor-pointer hover:underline">{{ selectedUser?.name }}</div>
+          <div class="text-sm text-[#777777]">{{ '@' + selectedUser?.username }}</div>
+        </div>
+      </div>
+      <div>
+        <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+          <lucide-icon name="Ellipsis" [size]="22" />
+        </button>
+      </div>
+    </div>
+    <div #chatContainer class="flex flex-col h-full overflow-y-auto mb-4 p-5 gap-2 rounded-xl bg-neutral-900">
+      @for (message of messages; track $index) {
+        <div
+          class="flex flex-col"
+          [ngClass]="{
+            'items-start': !message.fromMe,
+            'items-end': message.fromMe
+          }"
+        >
+          @for (text of message.texts; track $index) {
+            <div
+              class="max-w-[75%] font-medium text-sm px-4 py-2 rounded-full mt-1"
+              [ngClass]="{
+                'text-neutral-100 bg-[#323232] rounded-bl-none': !message.fromMe,
+                'text-neutral-50 bg-[#FF5252] rounded-br-none': message.fromMe
+              }"
+            >
+              {{ text }}
+            </div>
+          }
+
+          <span class="text-xs text-[#777777] mt-1 px-2">
+            {{ getRelativeTime(message.createdAt) }}
+          </span>
+        </div>
+      }
+    </div>
+
+    <app-message-write
+      [(messageText)]="messageText"
+      (messageTextChange)="messageText = $event"
+      (sendMessage)="handleSendMessage()"
+    />
+  </div>
+</app-main-content>
+ 
