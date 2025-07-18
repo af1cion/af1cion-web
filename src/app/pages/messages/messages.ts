@@ -5,8 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { formatDistanceToNow } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { format } from 'date-fns';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -88,8 +87,8 @@ export class Messages implements OnInit {
     }, 0);
   }
 
-  getRelativeTime(date: Date): string {
-    return formatDistanceToNow(date, { addSuffix: true, locale: enUS });
+  getTimeOnly(date: Date | string): string {
+    return format(new Date(date), 'HH:mm');
   }
 
   ngOnInit() {
@@ -132,6 +131,7 @@ export class Messages implements OnInit {
           fromMe: msg.senderId === this.currentUserId,
           createdAt: new Date(msg.createdAt),
           texts: [msg.content],
+          time: format(new Date(msg.createdAt), 'HH:mm')
         }));
 
         this.scrollToBottom();
