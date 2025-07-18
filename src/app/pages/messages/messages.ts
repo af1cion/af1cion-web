@@ -28,7 +28,6 @@ type Message = {
   selector: 'app-messages',
   imports: [
     NgClass,
-    NgFor,
     MainContent,
     Heading,
     MessageWrite,
@@ -74,23 +73,6 @@ export class Messages implements OnInit {
       : [];
   }
 
-  ngAfterViewInit() {
-    this.scrollToBottom();
-  }
-
-  private scrollToBottom() {
-    setTimeout(() => {
-      if (this.chatContainer && this.chatContainer.nativeElement) {
-        this.chatContainer.nativeElement.scrollTop =
-          this.chatContainer.nativeElement.scrollHeight;
-      }
-    }, 0);
-  }
-
-  getTimeOnly(date: Date | string): string {
-    return format(new Date(date), 'HH:mm');
-  }
-
   ngOnInit() {
     this.socket.onMessage().subscribe((msg) => {
       const otherUserId = msg.from === this.currentUserId ? msg.to : msg.from;
@@ -109,6 +91,19 @@ export class Messages implements OnInit {
     });
   }
 
+  scrollToBottom(): void {
+    setTimeout(() => {
+      if (this.chatContainer && this.chatContainer.nativeElement) {
+        const el = this.chatContainer.nativeElement;
+        el.scrollTop = el.scrollHeight;
+      }
+    }, 100);
+  }
+
+  getTimeOnly(date: Date | string): string {
+    return format(new Date(date), 'HH:mm');
+  }
+
   selectUser(userId: string) {
     this.selectedUser = this.users.find((u) => u.id === userId);
     this.roomId = [this.currentUserId, userId].sort().join('_');
@@ -122,7 +117,6 @@ export class Messages implements OnInit {
 
     this.socket.getMessages(this.roomId).subscribe({
       next: (resp) => {
-        console.log('Mensajes previos:', resp);
         const mensajesBackend = (resp.data || []).sort(
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -131,7 +125,7 @@ export class Messages implements OnInit {
           fromMe: msg.senderId === this.currentUserId,
           createdAt: new Date(msg.createdAt),
           texts: [msg.content],
-          time: format(new Date(msg.createdAt), 'HH:mm')
+          time: format(new Date(msg.createdAt), 'HH:mm'),
         }));
 
         this.scrollToBottom();
@@ -147,6 +141,7 @@ export class Messages implements OnInit {
     if (!text || !this.selectedUser || !this.roomId) return;
     this.socket.sendMessage(text, this.currentUserId, this.selectedUser.id);
     this.messageText = '';
+    this.scrollToBottom();
   }
 
   decodeJwtPayload(token: string): any {
