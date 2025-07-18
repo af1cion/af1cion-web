@@ -41,10 +41,10 @@
         >
           @for (text of message.texts; track $index) {
             <div
-              class="flex items-center max-w-[75%] px-4 py-2 rounded-full mt-1 gap-2"
+              class="flex items-end max-w-[75%] px-3 py-2 mt-1 gap-2"
               [ngClass]="{
-                'text-neutral-100 bg-[#323232] rounded-bl-none': !message.fromMe,
-                'text-neutral-50 bg-[#FF5252] rounded-br-none': message.fromMe
+                'text-neutral-100 bg-[#323232] rounded-tl-2xl rounded-br-2xl rounded-tr-2xl rounded-bl-none': !message.fromMe,
+                'text-neutral-50 bg-[#FF5252] rounded-2xl rounded-br-none': message.fromMe
               }"
             >
               <p class="font-medium text-sm text-neutral-50">
