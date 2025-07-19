@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   inject,
   OnInit,
   ViewChild,
@@ -8,6 +9,7 @@ import {
 import { format } from 'date-fns';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
+import { NgClass } from '@angular/common';
 
 import {
   Heading,
@@ -15,10 +17,20 @@ import {
   MessageWrite,
   MessageList,
 } from '@app/components';
-import { NgClass, NgFor } from '@angular/common';
+import {
+  popularEmojis,
+  animalsNatureEmojis,
+  foodDrinkEmojis,
+  activitiesEmojis,
+  travelPlacesEmojis,
+  objectsEmojis,
+  symbolsEmojis,
+  flagsEmojis,
+} from '@app/utils';
 import { ChatSocketService } from '@app/domains/services';
 
 type Message = {
+  id?: string;
   fromMe: boolean;
   createdAt: Date;
   texts: string[];
@@ -39,8 +51,20 @@ type Message = {
   styles: ``,
 })
 export class Messages implements OnInit {
+  @ViewChild('chatContainer') chatContainer!: ElementRef<HTMLDivElement>;
+
   public messageText = '';
   public selectedUser: any = null;
+  public openSmileIndex: string | null = null;
+  public popularEmojis = popularEmojis;
+  public animalsNatureEmojis = animalsNatureEmojis;
+  public foodDrinkEmojis = foodDrinkEmojis;
+  public activitiesEmojis = activitiesEmojis;
+  public travelPlacesEmojis = travelPlacesEmojis;
+  public objectsEmojis = objectsEmojis;
+  public symbolsEmojis = symbolsEmojis;
+  public flagsEmojis = flagsEmojis;
+
   public users = [
     {
       id: '6f0d29d5-3916-4d1a-849a-bae88c1d98a0',
@@ -60,12 +84,10 @@ export class Messages implements OnInit {
   private userPayload = this.token ? this.decodeJwtPayload(this.token) : null;
   private currentUserId = this.userPayload ? this.userPayload.id : '';
 
-  private socket = inject(ChatSocketService);
+  public allMessages: Record<string, Message[]> = {};
   public roomId: string | null = null;
 
-  public allMessages: Record<string, Message[]> = {};
-
-  @ViewChild('chatContainer') chatContainer!: ElementRef<HTMLDivElement>;
+  private socket = inject(ChatSocketService);
 
   get messages(): Message[] {
     return this.roomId && this.allMessages[this.roomId]
@@ -113,15 +135,14 @@ export class Messages implements OnInit {
 
     if (!this.allMessages[this.roomId]) this.allMessages[this.roomId] = [];
 
-    console.log(this.roomId);
-
     this.socket.getMessages(this.roomId).subscribe({
       next: (resp) => {
         const mensajesBackend = (resp.data || []).sort(
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
-        this.allMessages[this.roomId!] = mensajesBackend.map((msg: any) => ({
+        this.allMessages[this.roomId!] = mensajesBackend.map((msg: any, idx: number) => ({
+          id: msg.id ?? ('msg_' + idx + '_' + Date.now()), 
           fromMe: msg.senderId === this.currentUserId,
           createdAt: new Date(msg.createdAt),
           texts: [msg.content],
@@ -134,6 +155,20 @@ export class Messages implements OnInit {
         console.error('Error cargando mensajes del chat:', err);
       },
     });
+  }
+
+  isSmileOpen(id: string): boolean {
+    return this.openSmileIndex === id;
+  }
+
+  addEmoji(emoji: string) {
+    this.openSmileIndex = null;
+  }
+
+  toggleSmilePicker(id: string, event: MouseEvent) {
+    console.log(id);
+    event.stopPropagation();
+    this.openSmileIndex = this.openSmileIndex === id ? null : id;
   }
 
   handleSendMessage() {
@@ -153,5 +188,10 @@ export class Messages implements OnInit {
       console.error('Error decoding token:', error);
       return null;
     }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    this.openSmileIndex = null;
   }
 }
