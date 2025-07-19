@@ -11,9 +11,82 @@
       ></textarea>
     </div>
     <div class="flex items-start gap-1.5">
-      <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
-        <lucide-icon name="Smile" [size]="20" />
-      </button>
+      <div class="flex items-center justify-center smile-dropdown relative">
+        <button (click)="toggleSmile()" class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
+          <lucide-icon name="Smile" [size]="20" />
+        </button>
+        @if (isSmileOpen()) {
+          <div class="w-[320px] max-h-[320px] overflow-y-auto bottom-12 right-0 rounded-xl border border-neutral-800 bg-neutral-900 absolute z-50">
+            <div class="flex flex-col items-start text-sm text-neutral-50 p-4 px-5 gap-1">
+              <!-- emojis -->
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">More popular</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of popularEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Animals & Nature</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of animalsNatureEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Food & Drink</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of foodDrinkEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Activities</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of activitiesEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Travel & Places</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of travelPlacesEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Objects</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of objectsEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Symbols</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of symbolsEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-[#777777] mb-2">Flags</div>
+                <div class="grid grid-cols-8 gap-y-1 gap-x-3 mb-2 [&>button]:text-[26px] [&>button]:cursor-pointer">
+                  @for (emoji of flagsEmojis; track $index) {
+                    <button (click)="addEmoji(emoji)">{{ emoji }}</button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
       <button class="flex items-center justify-center w-[44px] h-[44px] text-[#CCCCCC] cursor-pointer rounded-full transition-all hover:text-neutral-50 hover:bg-neutral-800">
         <lucide-icon name="Image" [size]="20" />
       </button>
