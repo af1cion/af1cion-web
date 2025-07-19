@@ -30,13 +30,14 @@
         </button>
       </div>
     </div>
-    <div #chatContainer class="flex flex-col h-full overflow-y-auto mb-4 p-5 gap-3 rounded-xl bg-neutral-900">
+    <div #chatContainer class="flex flex-col h-full overflow-y-auto mb-4 p-5 gap-0 rounded-xl bg-neutral-900">
       @for (message of messages; track $index) {
         <div
           class="flex flex-col"
           [ngClass]="{
             'items-start': !message.fromMe,
-            'items-end': message.fromMe
+            'items-end': message.fromMe,
+            'mt-6': $index > 0 && message.fromMe !== messages[$index - 1].fromMe
           }"
         >
           @for (text of message.texts; track $index) {
