@@ -34,6 +34,7 @@ type Message = {
   fromMe: boolean;
   createdAt: Date;
   texts: string[];
+  reactions?: string;
 };
 
 @Component({
@@ -141,13 +142,15 @@ export class Messages implements OnInit {
           (a: any, b: any) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
-        this.allMessages[this.roomId!] = mensajesBackend.map((msg: any, idx: number) => ({
-          id: msg.id ?? ('msg_' + idx + '_' + Date.now()), 
-          fromMe: msg.senderId === this.currentUserId,
-          createdAt: new Date(msg.createdAt),
-          texts: [msg.content],
-          time: format(new Date(msg.createdAt), 'HH:mm'),
-        }));
+        this.allMessages[this.roomId!] = mensajesBackend.map(
+          (msg: any, idx: number) => ({
+            id: msg.id ?? 'msg_' + idx + '_' + Date.now(),
+            fromMe: msg.senderId === this.currentUserId,
+            createdAt: new Date(msg.createdAt),
+            texts: [msg.content],
+            time: format(new Date(msg.createdAt), 'HH:mm'),
+          })
+        );
 
         this.scrollToBottom();
       },
@@ -162,6 +165,14 @@ export class Messages implements OnInit {
   }
 
   addEmoji(emoji: string) {
+    if (!this.openSmileIndex) return;
+    const [msgId] = this.openSmileIndex.split('_');
+    const mensaje = this.messages.find((m) => m.id === msgId);
+
+    if (mensaje) {
+      mensaje.reactions = emoji;
+      this.scrollToBottom();
+    }
     this.openSmileIndex = null;
   }
 
