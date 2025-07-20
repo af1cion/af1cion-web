@@ -34,7 +34,8 @@ type Message = {
   fromMe: boolean;
   createdAt: Date;
   texts: string[];
-  reactions?: string;
+  reaction?: string;
+  reactionByMe?: boolean;
 };
 
 @Component({
@@ -170,10 +171,16 @@ export class Messages implements OnInit {
     const mensaje = this.messages.find((m) => m.id === msgId);
 
     if (mensaje) {
-      mensaje.reactions = emoji;
+      mensaje.reaction = emoji;
+      mensaje.reactionByMe = true;
       this.scrollToBottom();
     }
     this.openSmileIndex = null;
+  }
+
+  removeReaction(message: Message) {
+    message.reaction = undefined;
+    message.reactionByMe = false;
   }
 
   toggleSmilePicker(id: string, event: MouseEvent) {

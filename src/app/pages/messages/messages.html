@@ -153,15 +153,16 @@
             </div>
             }
           </div>
-          @if (message.reactions && message.reactions.length > 0) {
+          @if (message.reaction && message.reaction.length > 0) {
             <div 
               class="flex items-center justify-center w-[34px] h-[22px] -mb-1 -top-1.5 rounded-full border-2 border-neutral-900 bg-[#323232] relative z-50"
               [ngClass]="{
                 'left-3': !message.fromMe,
                 'right-3': message.fromMe
               }"
+              (click)="message.reactionByMe ? removeReaction(message) : null"
             >
-              @for (reaction of message.reactions; track $index) {
+              @for (reaction of message.reaction; track $index) {
                 <span class="text-sm select-none">{{ reaction }}</span>
               }
             </div>
